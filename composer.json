@@ -14,6 +14,6 @@
 	},
 	"extra" : {
 		"name" : "fast_filterable",
-		"class" : "\\Stesi\\Behavior\\FastFilterable"
+		"class" : "\\Stesi\\Behavior\\FastFilterableBehavior"
 	}
 }
