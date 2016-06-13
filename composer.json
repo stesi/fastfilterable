@@ -1,6 +1,6 @@
 {
 	"name" : "stesi/fast-filterable",
-	"description" : "Propel behavior for creating snapshots of models",
+	"description" : "Propel behavior for fast filter",
 	"type" : "propel-behavior",
 	"license" : "MIT",
 	"require" : {
@@ -9,11 +9,11 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Stesi\\Behavior\\" : ""
+			"Stesi\\PropelBehavior\\" : ""
 		}
 	},
 	"extra" : {
 		"name" : "fast_filterable",
-		"class" : "\\Stesi\\Behavior\\FastFilterableBehavior"
+		"class" : "\\Stesi\\PropelBehavior\\FastFilterableBehavior"
 	}
 }

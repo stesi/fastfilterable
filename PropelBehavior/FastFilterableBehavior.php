@@ -1,6 +1,6 @@
 <?php
 
-namespace Stesi\Behavior;
+namespace Stesi\PropelBehavior;
 
 use Propel\Generator\Model\Behavior;
 
