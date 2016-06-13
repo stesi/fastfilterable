@@ -1,5 +1,19 @@
 {
+	"name" : "stesi/fast-filterable",
+	"description" : "Propel behavior for creating snapshots of models",
+	"type" : "propel-behavior",
+	"license" : "MIT",
 	"require" : {
-		"propel/propel" : "~2.0@dev"
+		"php" : ">=5.6",
+		"propel/propel" : "~2.0.0-dev"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Stesi\\Behavior" : ""
+		}
+	},
+	"extra" : {
+		"name" : "fast_filterable",
+		"class" : "\\Stesi\Behavior\\FastFilterable"
 	}
 }
