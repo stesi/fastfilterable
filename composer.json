@@ -9,7 +9,7 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Stesi\\Behavior" : ""
+			"Stesi\\Behavior\\" : ""
 		}
 	},
 	"extra" : {
