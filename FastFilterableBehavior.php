@@ -1,7 +1,7 @@
 <?php 
 namespace Stesi\Behavior;
 use Propel\Generator\Model\Behavior;
-class FastFilterable extends Behavior{
+class FastFilterableBehavior extends Behavior{
 	public function queryMethods($builder) {
 		$script = '
 	/**
