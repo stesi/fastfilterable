@@ -36,7 +36,18 @@ class FastFilterableBehavior extends Behavior {
 			$this->where ( $filtro . " " . $value [\'operatore\'] . " ?", $value [\'valore\'] );
 		}
 		return $this;
-	}';
+	}
+				
+	        public function fastWith($columns) {
+ 
+        	foreach ( $columns as $column) {
+        		$this->withColumn ($column);
+        	}
+        	return $this;
+        }			
+				
+				
+				';
 	
 		return $script;
 	}
