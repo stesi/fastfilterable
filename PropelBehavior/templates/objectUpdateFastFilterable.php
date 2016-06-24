@@ -1,4 +1,3 @@
-<?php
 /**
  * Restituisce la query applicando tutti i filtri
  *
