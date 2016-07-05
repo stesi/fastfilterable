@@ -43,6 +43,19 @@ public function fastWith($withs) {
 	return $this;
 }
 
+public function fastOwner($entity,$me,$childs,$fathers)
+{
+$this->condition('sono_proprietario',$entity.".Proprietario = ?", $me)
+->condition('nessun_proprietario',$entity.".Proprietario IS NULL")
+->condition('proprietario_un_figlio',$entity.".Proprietario IN ?",$childs)
+->condition('proprietario_padre_in',$entity.".roprietario IN ?",$fathers)
+->condition('proprietario_padre_cond',"$entity.".Condiviso LIKE '%,0,%'")
+->combine(array('proprietario_padre_in','proprietario_padre_cond'),'and','proprietario_padre')
+->condition('condiviso_con_tutti',$entity.".Condiviso IS NULL")
+->condition('condiviso_con_me',$entity.".Condiviso LIKE ?","%,".$me.",%")
+->where(array('sono_proprietario','nessun_proprietario','proprietario_un_figlio','proprietario_padre','condiviso_con_tutti','condiviso_con_me'),'or')
+}
+
 public function fastGlobalSearch($columns,$globalFilter) {
 	$i = 0;
 	$conditionArray = array();
