@@ -5,7 +5,7 @@
  *
  * @return     \$this|$queryClassName La query filtrata
  */
- public function fastFilter($filtri) {
+     public function fastFilter($filtri,$having=false) {
         $filtriElaborati = array ();
         foreach ( $filtri as $filtro => $value ) {
         	if (!empty($value))
@@ -36,7 +36,10 @@
             $conditionArray[] = $conditionName;
             $this->condition( $conditionName, $filtro . " " . $value ['operatore'] . " ?", $value ['valore'] );
         }
-        $this -> where($conditionArray,'and');
+        if(!$having)
+        	$this -> where($conditionArray,'and');
+        else 
+        	$this -> having($conditionArray,'and');
         }
         return $this;
     }
@@ -53,20 +56,21 @@ public function fastWith($withs) {
 	return $this;
 }
 
-public function fastGlobalSearch($columns,$globalFilter) {
-	if (!empty($globalFilter))
+public function fastGlobalSearch($columns,$globalFilterValue,$having=false) {
+	if (!empty($globalFilterValue))
 	{
 	$i = 0;
 	$conditionArray = array();
 	foreach ( $columns as $column) {
-		if(empty($column['alias'])){
 			$i++;
 			$conditionName = "fastGlobalSearch".$i;
 			$conditionArray[] = $conditionName;
-			$this->condition($conditionName,$column['name']." LIKE ?",'%'.$globalFilter.'%');
-		}
+			$this->condition($conditionName,$column." LIKE ?",'%'.$globalFilterValue.'%');
 	}
-	$this -> where($conditionArray,'or');
+	if(!$having)
+		$this -> where($conditionArray,'or');
+	else
+		$this -> having($conditionArray,'or');
 	}
 	return $this;
 }
