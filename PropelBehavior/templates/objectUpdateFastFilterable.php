@@ -5,7 +5,7 @@
  *
  * @return     \$this|$queryClassName La query filtrata
  */
-       public function fastFilter($filtri) {
+       public function fastFilter($filtri,$having=false) {
                 $filtriElaborati = array ();
                 foreach ( $filtri as $filtro => $value ) {
                     if (!empty($value))
@@ -81,7 +81,10 @@
                         $this->condition( $conditionName, $filtro . " " . $value ['operatore'] . " ?", $value ['valore'] );
                     }
                 }
-                $this -> where($conditionArray,'and');
+                if(!$having)
+        			$this -> where($conditionArray,'and');
+      		    else 
+        			$this -> having($conditionArray,'and');
                 }
                 return $this;
             }
