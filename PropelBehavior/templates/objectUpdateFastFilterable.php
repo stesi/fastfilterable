@@ -87,16 +87,22 @@
 		}
 		return $this;
 	}
-	public function fastWith($withs) {
-		foreach ( $withs as $with ) {
-			if (! empty ( $with ['alias'] )) {
-				$this->withColumn ( $with ['name'], $with ['alias'] );
-			} else {
-				$this->withColumn ( $with ['name'] );
-			}
-		}
-		return $this;
-	}
+	 public function fastWith($withs) {
+         $columnNames=array();
+        foreach ( $withs as $with) {
+            if(!empty($with['alias'])){
+                $this->withColumn ($with['name'],$with['alias'] );
+                $columnNames[]=$with['alias'];
+            }else{
+                $this->withColumn ($with['name'] );
+                $columnNames[]=$with['name'];
+            }
+        }
+        if(count($columnNames)>0)
+        	$this->select($columnNames);
+        
+        return $this;
+    }
 	public function fastGlobalSearch($columns, $globalFilterValue, $having = false) {
 		if (! empty ( $globalFilterValue )) {
 			$i = 0;
