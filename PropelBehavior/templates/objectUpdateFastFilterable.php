@@ -19,10 +19,10 @@
 					case "TextBox" :
 						$primoCarettere = substr ( $value, 0, 1 );
 						$ultimoCarattere = substr ( $value, - 1 );
-						if ($primoCarettere == '%' or $ultimoCarattere == '%') {
-							$filtriElaborati [$filtro] ['operatore'] = "like";
-						} else {
+						if ($primoCarettere == '=' or $ultimoCarattere == '=') {
 							$filtriElaborati [$filtro] ['operatore'] = "=";
+						} else {
+							$filtriElaborati [$filtro] ['operatore'] = "like";
 						}
 						$filtriElaborati [$filtro] ['valore'] = $value;
 						break;
