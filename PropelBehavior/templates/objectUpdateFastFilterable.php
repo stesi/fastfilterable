@@ -17,15 +17,17 @@
 				switch ($type) {
 					
 					case "TextBox" :
-						$primoCarettere = substr ( $value, 0, 1 );
-						$ultimoCarattere = substr ( $value, - 1 );
-						if ($primoCarettere == '=' or $ultimoCarattere == '=') {
-							$filtriElaborati [$filtro] ['operatore'] = "=";
-						} else {
-							$filtriElaborati [$filtro] ['operatore'] = "like";
-						}
-						$filtriElaborati [$filtro] ['valore'] = $value;
-						break;
+					    $primoCarettere = substr ( $value, 0, 1 );
+                            $ultimoCarattere = substr ( $value, - 1 );
+                            if ($primoCarettere == '=' or $ultimoCarattere == '=') {
+                            	$value=($value[0]=="="?substr($value,1):substr($value,0,strlen($value)-1));
+                                $filtriElaborati [$filtro] ['operatore'] = "=";
+                            } else {
+                            	$value="%".$value."%";
+                                $filtriElaborati [$filtro] ['operatore'] = "like";
+                            }
+                            $filtriElaborati [$filtro] ['valore'] = $value;
+                            break;
 					case "Date" :
 						$date = explode ( "/", $value );
 						if (count ( $date ) == 2) {
