@@ -38,42 +38,62 @@
                                 $filtriElaborati [$filtro] ['valore'] = date ( 'Y-m-d', strtotime ( implode ( $date ) ) );
                             }
                             break;
-                        case "Select" :
-                            if (! is_array ( $value ))
-                                $value = explode ( ",", $value );
-                            if (is_array ( $value )) {
-                                $values = array ();
-                                //Se tra gli id della select trovo il valore *
-                                // non filtro per quella clausola
-                                
-                                $clausolaTutti=false;
-                                if(!in_array("*",$value)){
-	                                foreach ( $value as $v ) {
-	                                    if (! empty ( $v )) {
-	                                        $v = explode ( ",", $v );
-	                                        if (is_array ( $v )){
-	                                         	if(in_array("*",$v)){
-	                                         		$clausolaTutti=true;
-	                                         		break;
-	                                         	}
-	                                        	$values = array_merge ( $values, $v );
-	                                        }
-	                                        else
-	                                            $values [] = $v;
-	                                    }
-	                                }
-	                                if (!$clausolaTutti && count ( $values ) > 0) {
-	                                    $filtriElaborati [$filtro] ['operatore'] = "IN";
-	                                    $filtriElaborati [$filtro] ['valore'] = $values;
-	                                }
+                          case "Select" :
+                                if (! is_array ( $value ))
+                                    $value = explode ( ",", $value );
+                                if (is_array ( $value )) {
+                                    $values = array ();
+                                    //Se tra gli id della select trovo il valore *
+                                    // non filtro per quella clausola
+                                    
+                                    $clausolaTutti=false;
+                                    $clausolaYESNO=false;
+                                    if(!in_array("*",$value)){
+                                        foreach ( $value as $v ) {
+                                            if (! empty ( $v )) {
+
+                                                $v = explode ( ",", $v );
+                                                if (is_array ( $v )){
+                                                     if(in_array("*",$v)){
+                                                         $clausolaTutti=true;
+                                                         break;
+                                                     }else {
+                                                         if(in_array("YESNO",$v)){
+                                                            unset($v[0]);
+                                                         }
+                                                         $clausolaYESNO=true;
+
+                                                         $values = array_merge($values, $v);
+                                                     }
+                                                }
+                                                else
+                                                    $values [] = $v;
+                                            }
+                                        }
+                                        if($clausolaYESNO){
+                                            if(count($values)==1){
+                                                if($values[0]=="0") {
+                                                    $filtriElaborati [$filtro] ['operatore'] = "=";
+                                                    $filtriElaborati [$filtro] ['valore'] = "0";
+                                                }else{
+                                                    $filtriElaborati [$filtro] ['operatore'] = ">=";
+                                                    $filtriElaborati [$filtro] ['valore'] = "1";
+                                                }
+                                            }
+                                        }else {
+                                            if (!$clausolaTutti && count($values) > 0) {
+                                                $filtriElaborati [$filtro] ['operatore'] = "IN";
+                                                $filtriElaborati [$filtro] ['valore'] = $values;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if($value!="*"){
+                                        $filtriElaborati [$filtro] ['operatore'] = "=";
+                                        $filtriElaborati [$filtro] ['valore'] = $value;
+                                    }
                                 }
-                            } else {
-                            	if($value!="*"){
-                                	$filtriElaborati [$filtro] ['operatore'] = "=";
-                                	$filtriElaborati [$filtro] ['valore'] = $value;
-                            	}
-                            }
-                            break;
+                                break;
                     }
                 }
             }
