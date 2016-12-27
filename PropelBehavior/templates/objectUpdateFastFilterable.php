@@ -38,38 +38,51 @@
                                 $filtriElaborati [$filtro] ['valore'] = date ( 'Y-m-d', strtotime ( implode ( $date ) ) );
                             }
                             break;
-                          case "Select" :
+                         case "Select" :
                                 if (! is_array ( $value ))
                                     $value = explode ( ",", $value );
                                 if (is_array ( $value )) {
                                     $values = array ();
                                     //Se tra gli id della select trovo il valore *
                                     // non filtro per quella clausola
-                                    
+
                                     $clausolaTutti=false;
                                     $clausolaYESNO=false;
+                                    $clausolaNoFilter=false;
                                     if(!in_array("*",$value)){
                                         foreach ( $value as $v ) {
                                             if (! empty ( $v )) {
 
                                                 $v = explode ( ",", $v );
                                                 if (is_array ( $v )){
-                                                     if(in_array("*",$v)){
-                                                         $clausolaTutti=true;
-                                                         break;
-                                                     }else {
-                                                         if(in_array("YESNO",$v)){
+                                                    if(in_array("*",$v)){
+                                                        $clausolaTutti=true;
+                                                        break;
+                                                    }else {
+                                                        if(in_array("NOFILTER",$v)){
                                                             unset($v[0]);
-                                                         }
-                                                         $clausolaYESNO=true;
+                                                            $clausolaNoFilter=true;
+                                                            break;
+                                                        }
 
-                                                         $values = array_merge($values, $v);
-                                                     }
+                                                        if(in_array("YESNO",$v)){
+                                                            unset($v[0]);
+                                                        }
+                                                        $clausolaYESNO=true;
+
+                                                        $values = array_merge($values, $v);
+                                                    }
                                                 }
                                                 else
                                                     $values [] = $v;
                                             }
                                         }
+                                        //Se tra le opzioni inserisco il valore NOFILTER indico che il filtro deve essere
+                                        //effettuato a mano nel controller
+                                        if($clausolaNoFilter){
+                                            break;
+                                        }
+
                                         if($clausolaYESNO){
                                             if(count($values)==1){
                                                 if($values[0]=="0") {
