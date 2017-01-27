@@ -66,9 +66,9 @@
                                                         }
 
                                                         if(in_array("YESNO",$v)){
-                                                            unset($v[0]);
+                                                            unset($v[0]);                                                            
+                                                        	$clausolaYESNO=true;
                                                         }
-                                                        $clausolaYESNO=true;
 
                                                         $values = array_merge($values, $v);
                                                     }
